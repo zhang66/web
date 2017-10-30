@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, user-scalable=no;" />
+<title>生生不息</title>
+
+<script type="text/javascript"
+	src="http://api.map.baidu.com/getscript?v=2.0&ak=8d867483baeaffd7f85b1ee099aee919"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="/static/index.js">
+	
+</script>
+</head>
+<body>
+
+	<div id="root">
+		<input type="text" id="sd"> <input type="button" id="sa">
+	</div>
+
+	<div style="border: 1px solid red;">
+		我是添加一张临时图片得到微信的media_id保存数据库!
+		<form action="xxxxxxxxm" enctype="multipart/form-data" method="post">
+			<div style="display: none;">
+				<input type="text" value="IMAGE" name="type" />
+			</div>
+			上传图片:<input type="file" name="file" id="imageFile"
+				onchange="previewImage(this, 'prvid')" multiple="multiple"><br />
+			<input type="submit" id="upload" value="提交" />
+		</form>
+		<div id="prvid">预览容器</div>
+	</div>
+
+</body>
+</html>
+

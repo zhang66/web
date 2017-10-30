@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.maven.web.dao.TestDao">
+	<!-- 基本药品信息 -->
+	<resultMap id="ResultDeptMap" type="com.maven.web.pojo.Model">
+		<id column="dept_id" property="value" jdbcType="VARCHAR" />
+		<result column="dept_name" property="name" jdbcType="VARCHAR" />
+		<collection property="children" javaType="java.util.ArrayList"
+			column="dept_id" ofType="com.maven.web.pojo.Model"
+			select="selectBuildingInfo"></collection>
+	</resultMap>
+	<resultMap id="ResultBudlingMap" type="com.maven.web.pojo.Model">
+		<id column="building_id" property="value" jdbcType="VARCHAR" />
+		<result column="building_name" property="name" jdbcType="VARCHAR" />
+		<collection property="children" javaType="java.util.ArrayList"
+			column="{deptId= dept_id,budId=building_id}" ofType="com.maven.web.pojo.Model"
+			select="selectFloorInfo"></collection>
+	</resultMap>
+	<resultMap id="ResultFloorMap" type="com.maven.web.pojo.Model">
+		<id column="floor_id" property="value" jdbcType="VARCHAR" />
+		<result column="floor_name" property="name" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="selectDeptInfo" resultMap="ResultDeptMap"
+		parameterType="java.lang.Integer">
+		SELECT dept_id,dept_name
+		from department
+		WHERE
+		hospital_id=1 and is_active=1
+		ORDER BY sort_number
+	</select>
+	<select id="selectBuildingInfo" resultMap="ResultBudlingMap"
+		parameterType="java.lang.Integer">
+		SELECT d.dept_id, b.building_id,b.building_name from
+		department d
+		LEFT JOIN dept_build_floor dbf ON d.dept_id=dbf.dept_id
+		LEFT JOIN `build_floor` bf ON dbf.`build_floor_id` = bf.`id`
+		LEFT JOIN
+		`building` b ON bf.`building_id` = b.`building_id`
+		WHERE d.is_active=1
+		and dbf.is_active=1
+		and d.dept_id=#{deptId}
+	</select>
+	<select id="selectFloorInfo" resultMap="ResultFloorMap">
+		SELECT
+		f.floor_id,f.floor_name from
+		department d
+		LEFT JOIN dept_build_floor dbf
+		ON d.dept_id=dbf.dept_id
+		LEFT JOIN `build_floor` bf ON
+		dbf.`build_floor_id` = bf.`id`
+		LEFT JOIN `floor` f ON
+		bf.floor_id=f.floor_id
+		WHERE d.is_active=1 and dbf.is_active=1
+		and
+		d.dept_id=#{deptId} and bf.building_id=#{budId}
+	</select>
+</mapper>
