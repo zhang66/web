@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status = "off">
-  <properties>
-    <property name = "LOG_HOME">${pom.log.dir}</property>
+    <properties>
+    <property name = "LOG_HOME">logs/test</property>
     <!-- 日志备份目录 -->
-    <property name = "BACKUP_HOME">${pom.log.dir.backup}</property>
-    <property name = "SERVER_NAME">${pom.log.name}</property>
-    <property name = "EVERY_FILE_SIZE">${pom.log.filesize}</property><!-- 日志切割的最小单位 -->
-    <property name = "OUTPUT_LOG_LEVEL">${pom.log.level}</property><!-- 日志输出级别 -->
+    <property name = "BACKUP_HOME">backup</property>
+    <property name = "SERVER_NAME">mcm</property>
+    <property name = "EVERY_FILE_SIZE">50M</property><!-- 日志切割的最小单位 -->
+    <property name = "OUTPUT_LOG_LEVEL">INFO</property><!-- 日志输出级别 -->
   </properties>
   <appenders>
     <Console name = "Console" target = "SYSTEM_OUT">
@@ -51,7 +51,7 @@
             level = "TRACE" additivity = "false">
       <appender-ref ref = "Console"/>
     </logger>
-    <logger name = "com.blueocean.common.utils.LogAspectUtil"
+    <logger name = "com.blueocean.common.util.LogAspectUtil"
             level = "DEBUG" additivity = "false">
       <appender-ref ref = "Console"/>
     </logger>

@@ -2,21 +2,19 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.maven.web.dao.TestDao">
 	<!-- 基本药品信息 -->
-	<resultMap id="ResultDeptMap" type="com.maven.web.pojo.Model">
+	<resultMap id="ResultDeptMap" type="Model">
 		<id column="dept_id" property="value" jdbcType="VARCHAR" />
 		<result column="dept_name" property="name" jdbcType="VARCHAR" />
 		<collection property="children" javaType="java.util.ArrayList"
-			column="dept_id" ofType="com.maven.web.pojo.Model"
-			select="selectBuildingInfo"></collection>
+			column="dept_id" ofType="Model" select="selectBuildingInfo"></collection>
 	</resultMap>
-	<resultMap id="ResultBudlingMap" type="com.maven.web.pojo.Model">
+	<resultMap id="ResultBudlingMap" type="Model">
 		<id column="building_id" property="value" jdbcType="VARCHAR" />
 		<result column="building_name" property="name" jdbcType="VARCHAR" />
 		<collection property="children" javaType="java.util.ArrayList"
-			column="{deptId= dept_id,budId=building_id}" ofType="com.maven.web.pojo.Model"
-			select="selectFloorInfo"></collection>
+			column="{deptId= dept_id,budId=building_id}" ofType="Model" select="selectFloorInfo"></collection>
 	</resultMap>
-	<resultMap id="ResultFloorMap" type="com.maven.web.pojo.Model">
+	<resultMap id="ResultFloorMap" type="Model">
 		<id column="floor_id" property="value" jdbcType="VARCHAR" />
 		<result column="floor_name" property="name" jdbcType="VARCHAR" />
 	</resultMap>
@@ -53,5 +51,10 @@
 		WHERE d.is_active=1 and dbf.is_active=1
 		and
 		d.dept_id=#{deptId} and bf.building_id=#{budId}
+	</select>
+
+	<select id="selectInfo" resultType="Map">
+		select id,name ,time from
+		test
 	</select>
 </mapper>

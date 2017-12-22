@@ -17,7 +17,6 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.StringTokenizer;
 
-
 public class StringUtil {
 
 	/**
@@ -34,36 +33,39 @@ public class StringUtil {
 	 * hxw 返回当前月
 	 * 
 	 * @return
+	 * @author sdd
 	 */
 	public static String getMonth() {
 		Calendar calendar = Calendar.getInstance();
 		String temp = String.valueOf(calendar.get(2) + 1);
-		if (temp.length() < 2)
+		if (temp.length() < 2) {
 			temp = "0" + temp;
+		}
 		return temp;
 	}
-	
-	 /**
-	  * list转成以,分隔的字符串
+
+	/**
+	 * list转成以,分隔的字符串
+	 * 
 	 * @param stringList
 	 * @return String
 	 */
-	public static String listToString(List<String> stringList){
-	        if (stringList==null) {
-	            return null;
-	        }
-	        StringBuilder result=new StringBuilder();
-	        boolean flag=false;
-	        for (String string : stringList) {
-	            if (flag) {
-	                result.append(",");
-	            }else {
-	                flag=true;
-	            }
-	            result.append(string);
-	        }
-	        return result.toString();
-	    }
+	public static String listToString(List<String> stringList) {
+		if (stringList == null) {
+			return null;
+		}
+		StringBuilder result = new StringBuilder();
+		boolean flag = false;
+		for (String string : stringList) {
+			if (flag) {
+				result.append(",");
+			} else {
+				flag = true;
+			}
+			result.append(string);
+		}
+		return result.toString();
+	}
 
 	/**
 	 * 按长度分割字符串
@@ -167,6 +169,12 @@ public class StringUtil {
 		return param == null || param.trim().length() < 1;
 	}
 
+	/**
+	 * @author sdd
+	 * @param str
+	 * @param code
+	 * @return
+	 */
 	public static String encode(String str, String code) {
 		try {
 			return URLEncoder.encode(str, code);
@@ -350,12 +358,11 @@ public class StringUtil {
 		if (str.length() != 11 || !validateInt(str))
 			return false;
 
-		if (includeUnicom
-				&& (str.startsWith("130") || str.startsWith("133") || str.startsWith("131")))
+		if (includeUnicom && (str.startsWith("130") || str.startsWith("133") || str.startsWith("131")))
 			return true;
 
-		if (!(str.startsWith("139") || str.startsWith("138") || str.startsWith("137")
-				|| str.startsWith("136") || str.startsWith("135")))
+		if (!(str.startsWith("139") || str.startsWith("138") || str.startsWith("137") || str.startsWith("136")
+				|| str.startsWith("135")))
 			return false;
 		return true;
 	}
@@ -397,8 +404,7 @@ public class StringUtil {
 		return covertCode(s, "GB2312", "ISO8859-1");
 	}
 
-	public static String covertCode(String s, String code1, String code2)
-			throws UnsupportedEncodingException {
+	public static String covertCode(String s, String code1, String code2) throws UnsupportedEncodingException {
 		if (s == null)
 			return null;
 		else if (s.trim().equals(""))
@@ -645,8 +651,7 @@ public class StringUtil {
 		return new java.sql.Date(lngTime);
 	}
 
-	public static java.util.Date stringToUtilDate(String strDate, String pattern)
-			throws ParseException {
+	public static java.util.Date stringToUtilDate(String strDate, String pattern) throws ParseException {
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		return simpleDateFormat.parse(strDate);
 	}
@@ -1084,153 +1089,157 @@ public class StringUtil {
 
 	/**
 	 * 判断某字符串是否为null，如果长度大于256，则返回256长度的子字符串，反之返回原串
+	 * 
 	 * @param str
 	 * @return
 	 */
-	public static String checkStr(String str){
-		if(str==null){
+	public static String checkStr(String str) {
+		if (str == null) {
 			return "";
-		}else if(str.length()>256){
+		} else if (str.length() > 256) {
 			return str.substring(256);
-		}else{
+		} else {
 			return str;
 		}
 	}
-	
+
 	/**
-     * 修改敏感字符编码
-     * 
-     * @param value
-     * @return
-     */
-	public static String htmlEncode(String value){
-	    String re[][] = {{"<","&lt;"},
-	                     {">","&gt;"},
-	                     {"\"","&quot;"},
-	                     {"\\′","&acute;"},
-	                     {"&","&amp;"}
-	                    };
-	   
-	    for(int i=0; i<4; i++){
-	        value = value.replaceAll(re[i][0], re[i][1]);
-	    }
-	   
-	    return value;
+	 * 修改敏感字符编码
+	 * 
+	 * @param value
+	 * @return
+	 */
+	public static String htmlEncode(String value) {
+		String re[][] = { { "<", "&lt;" }, { ">", "&gt;" }, { "\"", "&quot;" }, { "\\′", "&acute;" },
+				{ "&", "&amp;" } };
+
+		for (int i = 0; i < 4; i++) {
+			value = value.replaceAll(re[i][0], re[i][1]);
+		}
+
+		return value;
 	}
+
 	/**
-     * 防SQL注入
-     * 
-     * @param str
-     * @return
-     */
-	public static boolean sql_inj(String str) 
-	 {
-		 String inj_str = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare|;|or|-|+|,";
-		 String inj_stra[] = inj_str.split("|");
-		 for (int i=0 ; i < inj_stra.length ; i++ )
-		 {
-			 if (str.indexOf(inj_stra[i])>=0)
-			 {
-			 	return true;
-			 }
-		 }
-		 return false;
-	 }
-	
+	 * 防SQL注入
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean sql_inj(String str) {
+		String inj_str = "'|and|exec|insert|select|delete|update|count|*|%|chr|mid|master|truncate|char|declare|;|or|-|+|,";
+		String inj_stra[] = inj_str.split("|");
+		for (int i = 0; i < inj_stra.length; i++) {
+			if (str.indexOf(inj_stra[i]) >= 0) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
-	 * 检查输入项是否有不合法字符
-	 * 返回false代表输入字符不合法，反之相反
+	 * 检查输入项是否有不合法字符 返回false代表输入字符不合法，反之相反
+	 * 
 	 * @param str
 	 * @return
 	 */
 	public static boolean checkString(String str) {
 		String strtmp = "%\\/()><;#$&[]{}'-";
 		boolean bl = true;
-		if (str != null && !str.equals("")) 
+		if (str != null && !str.equals(""))
 			for (int i = 0; i < str.length(); i++) {
 				if (strtmp.indexOf(str.charAt(i)) > -1) {
 					bl = false;
 					break;
 				}
 			}
-		else{
-			bl=false;
+		else {
+			bl = false;
 		}
 		return bl;
 
 	}
+
 	/**
-	 * 检查输入项是否有不合法字符(除掉"-")
-	 * 返回false代表输入字符不合法，反之相反
+	 * 检查输入项是否有不合法字符(除掉"-") 返回false代表输入字符不合法，反之相反
+	 * 
 	 * @param str
 	 * @return
 	 */
 	public static boolean checkStrExceptSign(String str) {
 		String strtmp = "%\\/()><;#$&[]{}'";
 		boolean bl = true;
-		if (str != null && !str.equals("")) 
+		if (str != null && !str.equals(""))
 			for (int i = 0; i < str.length(); i++) {
 				if (strtmp.indexOf(str.charAt(i)) > -1) {
-					//logger.info("str:"+str.charAt(i));
+					// logger.info("str:"+str.charAt(i));
 					bl = false;
 					break;
 				}
 			}
-		else{
-			bl=false;
+		else {
+			bl = false;
 		}
 		return bl;
 
 	}
-	
+
 	public static void main(String[] args) {
 		String s = "<中国>delete";
-		//logger.info(sql_inj(s));
-		
-//		logger.info("4移动用户:"+StringUtil.GBToUTF8("移动用户"));
-//		logger.info("2固话用户:"+StringUtil.GBToUTF8("固话用户"));
-//		logger.info("5宽带用户:"+StringUtil.GBToUTF8("宽带用户"));
-//		logger.info("10注册帐号:"+StringUtil.GBToUTF8("注册帐号"));
-//		logger.info("1客户编码:"+StringUtil.GBToUTF8("客户编码"));
-			
-		//logger.info("支付宝:"+StringUtil.GBToUTF8("支付宝"));
-		
-		/*logger.info("1身份证:"+StringUtil.GBToUTF8("身份证"));
-		logger.info("4护照:"+StringUtil.GBToUTF8("护照"));
-		logger.info("2军官证:"+StringUtil.GBToUTF8("军官证"));
-		logger.info("12其他:"+StringUtil.GBToUTF8("其他"));*/
+		// logger.info(sql_inj(s));
+
+		// logger.info("4移动用户:"+StringUtil.GBToUTF8("移动用户"));
+		// logger.info("2固话用户:"+StringUtil.GBToUTF8("固话用户"));
+		// logger.info("5宽带用户:"+StringUtil.GBToUTF8("宽带用户"));
+		// logger.info("10注册帐号:"+StringUtil.GBToUTF8("注册帐号"));
+		// logger.info("1客户编码:"+StringUtil.GBToUTF8("客户编码"));
+
+		// logger.info("支付宝:"+StringUtil.GBToUTF8("支付宝"));
+
+		/*
+		 * logger.info("1身份证:"+StringUtil.GBToUTF8("身份证"));
+		 * logger.info("4护照:"+StringUtil.GBToUTF8("护照"));
+		 * logger.info("2军官证:"+StringUtil.GBToUTF8("军官证"));
+		 * logger.info("12其他:"+StringUtil.GBToUTF8("其他"));
+		 */
 	}
-	
+
 	/**
-     * 判断是否为为空值
-     * @param str
-     * @return
-     */
-    public static boolean isNull(String str) {
-        if(str==null||str.length()==0 || "null".equalsIgnoreCase(str))
-        return true; else return false;
-    }
-    /**
-     * 判断数组里面是否存在空值
-     * @param str
-     * @return
-     */
-    public static boolean isNullArray(String[] str) {
-    	if(str==null)return true;
-        for(int i=0;i<str.length;i++){
-    	   if(str[i]==null||str[i].length()==0)return true;
-        }
-        return false;
-    }
-    
-    public static String isNullStr(String str) {
-        if(str==null||str.length()==0 || "null".equalsIgnoreCase(str))	{
-        	return "";
-        }else	{
-        	return str;
-        }
-    }
-    
+	 * 判断是否为为空值
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNull(String str) {
+		if (str == null || str.length() == 0 || "null".equalsIgnoreCase(str))
+			return true;
+		else
+			return false;
+	}
+
+	/**
+	 * 判断数组里面是否存在空值
+	 * 
+	 * @param str
+	 * @return
+	 */
+	public static boolean isNullArray(String[] str) {
+		if (str == null)
+			return true;
+		for (int i = 0; i < str.length; i++) {
+			if (str[i] == null || str[i].length() == 0)
+				return true;
+		}
+		return false;
+	}
+
+	public static String isNullStr(String str) {
+		if (str == null || str.length() == 0 || "null".equalsIgnoreCase(str)) {
+			return "";
+		} else {
+			return str;
+		}
+	}
 
 	/**
 	 * 
@@ -1272,47 +1281,47 @@ public class StringUtil {
 		}
 		return false;
 	}
-	
-	/**
-	  * 
-	  * @param text 目标字符串
-	  * @param length 截取长度
-	  * @param encode 采用的编码方式
-	  * @return
-	  * @throws UnsupportedEncodingException
-	  */
-	 public static String substring(String text, int length, String encode)
-	   throws UnsupportedEncodingException {
-	  if (text == null) {
-	   return null;
-	  }
-	  StringBuilder sb = new StringBuilder();
-	  int currentLength = 0;
-	  for (char c : text.toCharArray()) {
-	   currentLength += String.valueOf(c).getBytes(encode).length;
-	   if (currentLength <= length) {
-	    sb.append(c);
-	   } else {
-	    break;
-	   }
-	  }
-	  return sb.toString();
 
-	 }
-	 
-	     /**
-	     * 动态解析“|”隔开的字符
-	     */
-	    public static List<String> parseStrToList(String paramStr) 
-	    {
-	        Scanner s = new Scanner(paramStr);
-	        List<String>  list=new ArrayList<String>();
-	        s.useDelimiter("\\|");
-	        while (s.hasNext())
-	        { 
-	            String tmp=s.next();
-	            list.add(tmp);
-	        }
-	        return list;
-	    }
+	/**
+	 * 
+	 * @param text
+	 *            目标字符串
+	 * @param length
+	 *            截取长度
+	 * @param encode
+	 *            采用的编码方式
+	 * @return
+	 * @throws UnsupportedEncodingException
+	 */
+	public static String substring(String text, int length, String encode) throws UnsupportedEncodingException {
+		if (text == null) {
+			return null;
+		}
+		StringBuilder sb = new StringBuilder();
+		int currentLength = 0;
+		for (char c : text.toCharArray()) {
+			currentLength += String.valueOf(c).getBytes(encode).length;
+			if (currentLength <= length) {
+				sb.append(c);
+			} else {
+				break;
+			}
+		}
+		return sb.toString();
+
+	}
+
+	/**
+	 * 动态解析“|”隔开的字符
+	 */
+	public static List<String> parseStrToList(String paramStr) {
+		Scanner s = new Scanner(paramStr);
+		List<String> list = new ArrayList<String>();
+		s.useDelimiter("\\|");
+		while (s.hasNext()) {
+			String tmp = s.next();
+			list.add(tmp);
+		}
+		return list;
+	}
 }

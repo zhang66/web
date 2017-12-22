@@ -7,16 +7,17 @@ $(function() {
 	});// 触发button的click事件
 });
 function get() {
-	var url = "/testAction/getInfo";
+	var url = "http://192.168.1.66:10005/channel/listAllChannel";
 	$.ajax({
 		type : "post",
 		url : url,
-		// data: "para="+para, 此处data可以为 a=1&b=2类型的字符串 或 json数据。
 		data : {
-
-		},
-		cache : false,
-		async : false,
+			"page" : 2,
+			"pageSize" : 10,
+			"channelType" : "",
+			"name" : ""
+		}, // 此处data可以为 a=1&b=2类型的字符串 或 json数据。
+		crossDomain : true,
 		dataType : "json",
 		success : function(data, textStatus, jqXHR) {
 			$("#sd").val(data.value);
@@ -31,33 +32,36 @@ function get() {
 	});
 };
 function pushImg() {
-    debugger;
-    var url = "/uploadAction/uploadPic"; //访问控制器是upload，后面必须加'/'否则会报错"org.apache.catalina.connector.RequestFacade cannot be cast to org.springframework.web.multipart.Mult...",但是如果是多级的URL【例如XX/XXX/00/upload/0】又没问题了.
-    var param = $("#errorParameter").val();
- 
-    var files = $("#imageFile").get(0).files[0]; //获取file控件中的内容
- 
-    var fd = new FormData();
-    fd.append("userID", "1");
-    fd.append("errDeviceType", "001");
-    fd.append("errDeviceID", "11761b4a-57bf-11e5-aee9-005056ad65af");
-    fd.append("errType", "001");
-    fd.append("errContent", "XXXXXX");
-    fd.append("errPic", files);
-    $.ajax({
-        type: "POST",
-        contentType:false, //必须false才会避开jQuery对 formdata 的默认处理 , XMLHttpRequest会对 formdata 进行正确的处理
-        processData: false, //必须false才会自动加上正确的Content-Type 
-        url: url,
-        data: fd,
-        success: function (msg) {
-           
-            alert(jsonString);
-        },
-        error: function (msg) {
-            alert("error");
-        }
-    });
+	debugger;
+	var url = "/uploadAction/uploadPic"; // 访问控制器是upload，后面必须加'/'否则会报错"org.apache.catalina.connector.RequestFacade
+	// cannot be cast to
+	// org.springframework.web.multipart.Mult...",但是如果是多级的URL【例如XX/XXX/00/upload/0】又没问题了.
+	var param = $("#errorParameter").val();
+
+	var files = $("#imageFile").get(0).files[0]; // 获取file控件中的内容
+
+	var fd = new FormData();
+	fd.append("userID", "1");
+	fd.append("errDeviceType", "001");
+	fd.append("errDeviceID", "11761b4a-57bf-11e5-aee9-005056ad65af");
+	fd.append("errType", "001");
+	fd.append("errContent", "XXXXXX");
+	fd.append("errPic", files);
+	$.ajax({
+		type : "POST",
+		contentType : false, // 必须false才会避开jQuery对 formdata 的默认处理 ,
+		// XMLHttpRequest会对 formdata 进行正确的处理
+		processData : false, // 必须false才会自动加上正确的Content-Type
+		url : url,
+		data : fd,
+		success : function(msg) {
+
+			alert(jsonString);
+		},
+		error : function(msg) {
+			alert("error");
+		}
+	});
 }
 
 function previewImage(file, prvid) {
