@@ -24,7 +24,7 @@ public class MailSend {
 		// 邮箱用户名，即QQ账号
 		final String username = "1151407949";
 		// 邮箱授权码
-		final String password = "mvwurpbdbidaiiga";
+		final String password = "xxxxx";
 		// 要发送到的邮箱
 		String to = "zyl@blueocean-health.com";
 		// 自己的邮箱
