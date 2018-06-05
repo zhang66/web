@@ -1,0 +1,43 @@
+# Tomcat
+server:
+    tomcat:
+        uri-encoding: UTF-8
+        max-threads: 1000
+        min-spare-threads: 30
+    port: 8086
+    context-path: /lhxm
+
+# mysql
+spring:
+  profiles:
+    include: druid,mybatis
+  # jackson时间格式化
+  jackson:
+      time-zone: GMT+8
+      date-format: yyyy-MM-dd
+  http:
+      multipart:
+       max-file-size: 100MB
+       max-request-size: 100MB
+       enabled: true
+  # 指定静态资源的路径
+  resources:
+      static-locations: classpath:/tender/
+#用户验证
+jwt:
+  header: token
+  secret: 4085380846C853EB124D2E11AB3DD5CF
+  expiration: 1800
+  refresh_token_expiration: 2600000
+  tokenHead: Bearer 
+  clientId: 098f6bcd4621d373cade4e832627b4f6
+token:
+  expire: 60
+user:
+  avatar: yweuyw82378423
+#无需验证，放行路径
+request:
+  permit:
+    contextPath: ${server.context-path}
+    urls[0]: /auth
+    urls[1]: /resource

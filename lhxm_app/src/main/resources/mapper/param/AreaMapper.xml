@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blueocean.web.params.dao.AreaDao">
+
+	<select id="selectRegionInfo" resultType="RegionDto">
+		select
+		REGION_ID
+		value,REGION_CODE code,REGION_NAME name,PARENT_ID pvalue,REGION_LEVEL
+		level,REGION_NAME_EN enName,REGION_SHORTNAME_EN enShortName
+		from
+		areas_dic
+		where REGION_ID!=1;
+	</select>
+</mapper>

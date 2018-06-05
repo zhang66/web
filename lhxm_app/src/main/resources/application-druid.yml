@@ -1,0 +1,28 @@
+# mysql
+spring:
+    datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        #数据库连接基本属性
+        url: jdbc:mysql://192.168.1.88:3306/jzyx?characterEncoding=utf8&useSSL=true&allowMultiQueries=true
+        driverClassName: com.mysql.jdbc.Driver
+        username: lhjk
+        password: lhjk123!
+        filters: stat
+        #以下是数据库连接池初始化数据
+        maxActive: 20
+        initialSize: 3
+        maxWait: 60000
+        minIdle: 5
+        timeBetweenEvictionRunsMillis: 6000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: SELECT
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        maxOpenPreparedStatements: 20
+        removeAbandoned: true
+        #设置链接租期时间通过datasource.getConnontion() 
+        #取得的连接必须在removeAbandonedTimeout这么多秒内调用close(),
+        #要不我就弄死你.(就是conn不能超过指定的租期)
+        removeAbandonedTimeout: 1800
+        logAbandoned: true

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blueocean.web.auth.dao.UserDao">
+
+	<resultMap id="userResultMap" type="UserDeatilsDto">
+		<id column="uaer_id" property="id" jdbcType="INTEGER" />
+		<result column="user_name" property="username" jdbcType="VARCHAR" />
+		<result column="user_real_name" property="realName" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="userhead_pic_url" property="headPic" jdbcType="VARCHAR" />
+		<result column="telphone" property="telphone" jdbcType="VARCHAR" />
+		<result column="is_active" property="isActive" jdbcType="VARCHAR" />
+	</resultMap>
+
+
+
+	<select id="getUserInfo" resultMap="userResultMap">
+		SELECT
+		user_id,
+		user_name,
+		password,
+		user_real_name,
+		userhead_pic_url,
+		telphone,
+		is_active
+		FROM
+		user_info
+		where user_id=#{id}
+	</select>
+
+	<select id="findByUserName" resultType="UserPo">
+		SELECT user_id id,
+		user_name username,
+		password password,
+		user_real_name realName,
+		userhead_pic_url headPic,
+		telphone telphone,
+		is_active isActive
+		FROM
+		user_info
+		where
+		user_name=#{username}
+	</select>
+
+
+
+	<!-- 查询用户列表 -->
+	<!-- <select id="selectUserByParams" resultType="com.blueocean.web.auth.dto.UserListDto" 
+		parameterType="com.blueocean.web.auth.dto.UserQueryDto"> SELECT user_id id, 
+		user_name username, password password, user_real_name realName, userhead_pic_url 
+		headPic, telphone telphone, is_active isActive FROM user_info <include refid="listSearsh" 
+		/> </select> <sql id="listSearsh"> <where> <if test="id!=null"> AND user_id=#{id} 
+		</if> <if test="phone!=null and phone!=''"> AND telphone=#{phone} </if> <if 
+		test="name!=null and name!=''"> AND user_name=#{name} </if> AND is_active=1 
+		</where> </sql> -->
+</mapper>

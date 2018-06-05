@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"   
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.blueocean.web.params.dao.ParamDao">
+	<!-- Param -->
+	<resultMap type="Param" id="ParamResultMap">
+		<result column="ID" property="id" />
+
+		<result column="TYPENAME" property="name" />
+		<result column="TYPEVALUE" property="value" />
+
+		<collection property="items" resultMap="ParamItemResultMap" />
+	</resultMap>
+	<!-- ParamItem -->
+	<resultMap type="ParamItem" id="ParamItemResultMap">
+		<result column="PARAMID" property="id" />
+
+		<result column="NAME" property="name" />
+		<result column="VALUE" property="value" />
+	</resultMap>
+
+	<resultMap type="ParamList" id="ParamListMap">
+		<result column="PARAMTYPE" property="type" />
+
+		<result column="NAME" property="name" />
+		<result column="VALUE" property="val" />
+	</resultMap>
+
+	<sql id="ParamFindCriteria">
+		<where>
+			<if test="display != null and display != ''"> and DISPLAY = #{display} </if>
+			<if test="type != null">
+				and TYPEVALUE in
+				<foreach item="item" index="index" collection="type" open="("
+					separator="," close=")">
+					#{item}
+				</foreach>
+			</if>
+		</where>
+	</sql>
+	<sql id="ParamColumns">TYPENAME, TYPEVALUE, NAME, VALUE</sql>
+	<!-- 根据线索id查询 -->
+	<select id="getParamsByCriteria" resultMap="ParamResultMap"
+		parameterType="ParamDto">
+		select
+		<include refid="ParamColumns" />
+		from param_param join param_type on PARAMTYPE=ID
+		<include refid="ParamFindCriteria" />
+	</select>
+	<select id="getParamName" resultType="java.lang.String">
+		select NAME FROM
+		param_param where VALUE=#{paramVal} and PARAMTYPE=#{paramType}
+	</select>
+
+	<select id="findAll" resultMap="ParamListMap">
+		SELECT VALUE,NAME,PARAMTYPE FROM
+		param_param WHERE DISPLAY=1
+	</select>
+</mapper>  
